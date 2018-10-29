@@ -1,0 +1,153 @@
+	<!doctype html>
+
+	<html>
+		<head>
+			<style>
+				$orange: #ffa600;
+	$grey:#f3f3f3;
+	$white: #fff;
+	$base-color:$orange ;
+
+
+	/* Mixin's */  
+	@mixin transition {
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+	}
+	@mixin corners ($radius) {
+	-moz-border-radius: $radius;
+	-webkit-border-radius: $radius;
+	border-radius: $radius; 
+	-khtml-border-radius: $radius; 
+	}
+
+	body {
+	background:$base-color;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	height:100%;
+	}
+
+	.wrapper {
+	width: 800px;
+	margin: 30px auto;
+	color:$white;
+	text-align:center;
+	}
+
+	h1, h2, h3 {
+	  font-family: 'Roboto', sans-serif;
+	  font-weight: 100;
+	  font-size: 2.6em;
+	  text-transform: uppercase;
+	}
+
+	#seconds, #tens, #minutes, #hours{
+	  font-size:2em;
+	}
+
+	button{
+	@include corners (5px);
+	background:$base-color;
+	color:$white;
+	border: solid 1px $white;
+	text-decoration:none;
+	cursor:pointer;
+	font-size:1.2em;
+	padding:18px 10px;
+	width:180px;
+	margin: 10px;
+	 outline: none;
+	  &:hover{
+		@include transition;
+		background:$white;
+		border: solid 1px $white;
+		color:$base-color;
+		}
+	}
+			</style>
+		</head>
+		<body>
+			<div class = "wrapper">
+				<h1>Dope Stopwatch</h1>
+				<h2>My Stopwatch is Better Than yours</h2>
+				<p><span id ="hours">00</span>:<span id ="minutes">00</span>:<span id ="seconds">00</span>:<span id = "tens">00</span></p>
+				<button id ="button-start">start</button>
+				<button id ="button-stop">stop</button>
+				<button id ="button-reset">reset</button>
+			</div>
+			<script>
+				window.onload = function(){
+					let hours = 00;
+					let minutes = 00;
+					let tens = 00;
+					let seconds = 00;
+					let appendHours = document.getElementById("hours");
+					let appendminutes = document.getElementById("minutes");
+					let appendTens = document.getElementById("tens");
+					let appendSeconds = document.getElementById("seconds");
+					let start = document.getElementById("button-start");
+					let stop = document.getElementById("button-stop");
+					let reset = document.getElementById("button-reset")
+					var Interval;
+
+
+					start.onclick = function() {
+						Interval = setInterval(startTimer, 10);
+					}
+					stop.onclick = function() {
+						Interval = clearInterval(Interval);
+					}
+					reset.onclick = function() {
+						interval = clearInterval(Interval);
+						tens = "00";
+						seconds = "00";
+						minutes = "00";
+						hours = "00";
+						appendTens.innerHTML = tens;
+						appendSeconds.innerHTML = seconds;
+						appendHours.innerHTML = hours;
+					}
+					function startTimer() {
+						tens++;
+
+						if(tens < 9) {
+							appendTens.innerHTML = "0" + tens;
+						}
+						if(tens > 9) {
+							appendTens.innerHTML = tens;
+						}
+
+						if(tens > 99) {
+							console.log("seconds");
+							seconds++;
+							appendSeconds.innerHTML = "0" + seconds;
+							tens = 0;
+							appendTens.innerHTML = "0" + 0;
+						}
+
+						if(seconds > 9) {
+							appendSeconds.innerHTML = seconds;
+						}
+						if(seconds > 59) {	
+							seconds = "00";
+							minutes++;
+							appendminutes.innerHTML = minutes;
+
+								if(reset.onclick == true){ 		
+									minutes = "00";
+									hours = "00";
+								}
+						}
+						if(minutes > 59) {
+							minutes = "00";
+							hours++;
+							appendHours.innerHTML = hours;
+							appendminutes.innerHTML = minutes;
+						}
+					}
+				}
+			</script>
+		</body>
+	</html>
+
